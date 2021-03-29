@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components';
+import { StateContext } from '../../context/game/GameContext';
 import BaseProps from '../../interface/BaseProps'
 import Item from './Item';
 
 function Game(props: BaseProps) {
     const { className } = props;
+    const { board } = useContext(StateContext);
+
     useEffect(() => {
         window.document.addEventListener("keyup", () => {
 
@@ -15,23 +18,22 @@ function Game(props: BaseProps) {
 
     return (
         <div className={className}>
-            <Item className={"item"} value={0} />
-            <Item className={"item"} value={2} />
-            <Item className={"item"} value={4} />
-            <Item className={"item"} value={8} />
-            <Item className={"item"} value={16} />
-            <Item className={"item"} value={32} />
-            <Item className={"item"} value={64} />
-            <Item className={"item"} value={128} />
-            <Item className={"item"} value={256} />
-            <Item className={"item"} value={512} />
-            <Item className={"item"} value={1024} />
-            <Item className={"item"} value={2048} />
-            <Item className={"item"} value={0} />
-            <Item className={"item"} value={0} />
-            <Item className={"item"} value={0} />
-            <Item className={"item"} value={0} />
-
+            <Item key={1} className={"item"} value={board[0][0]} />
+            <Item key={2} className={"item"} value={board[0][1]} />
+            <Item key={3} className={"item"} value={board[0][2]} />
+            <Item key={4} className={"item"} value={board[0][3]} />
+            <Item key={5} className={"item"} value={board[1][0]} />
+            <Item key={6} className={"item"} value={board[1][1]} />
+            <Item key={7} className={"item"} value={board[1][2]} />
+            <Item key={8} className={"item"} value={board[1][3]} />
+            <Item key={9} className={"item"} value={board[2][0]} />
+            <Item key={10} className={"item"} value={board[2][1]} />
+            <Item key={11} className={"item"} value={board[2][2]} />
+            <Item key={12} className={"item"} value={board[2][3]} />
+            <Item key={13} className={"item"} value={board[3][0]} />
+            <Item key={14} className={"item"} value={board[3][1]} />
+            <Item key={15} className={"item"} value={board[3][2]} />
+            <Item key={16} className={"item"} value={board[3][3]} />
         </div>
     )
 }
@@ -40,7 +42,7 @@ export default styled(Game)`
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 32em;
+    height: 35em;
     justify-content: center;
     align-items: center;
     background: #BBAC9F;
@@ -61,6 +63,7 @@ export default styled(Game)`
     }
     .item[data-value="2"] {
         background: #EEE3DA;
+        transition: all .3s ease-in-out;
     }
     .item[data-value="4"] {
         background: #EEE0C9;

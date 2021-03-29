@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components';
+import { HandleContext } from '../context/game/GameContext';
 import { data } from '../data';
 import BaseProps from '../interface/BaseProps'
 
 function Button(props: BaseProps) {
     const { className } = props;
+    const { reset } = useContext(HandleContext);
+    const handleClick = useCallback(() => {
+
+        reset();
+    }, [reset]);
     return (
-        <button className={className} >
+        <button className={className} onClick={handleClick} >
             <b>{data.button}</b>
         </button>
     )
