@@ -39,8 +39,8 @@ function Game(props: BaseProps) {
 export default styled(Game)`
     display: flex;
     flex-direction: row;
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    height: 32em;
     justify-content: center;
     align-items: center;
     background: #BBAC9F;
