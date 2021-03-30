@@ -18,7 +18,7 @@ function Render(props: BaseProps) {
 }
 
 export default styled(Render)`
-    width: 50%;
+    width: 40em;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

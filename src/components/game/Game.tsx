@@ -1,24 +1,55 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components';
-import { StateContext } from '../../context/game/GameContext';
+import { HandleContext, StateContext } from '../../context/game/GameContext';
 import BaseProps from '../../interface/BaseProps'
 import Item from './Item';
 
 function Game(props: BaseProps) {
     const { className } = props;
     const { board } = useContext(StateContext);
-
+    const { up, left, right, down } = useContext(HandleContext);
+    const itemList = [];
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            itemList.push(board[i][j]);
+        }
+    }
     useEffect(() => {
-        window.document.addEventListener("keyup", () => {
-
-        });
-
+        function keyUpEvent(e: KeyboardEvent) {
+            switch (e.key) {
+                case 'w':
+                    up();
+                    console.log('w')
+                    break;
+                case 'a':
+                    left();
+                    console.log('a');
+                    break;
+                case 'd':
+                    right();
+                    console.log('d');
+                    break;
+                case 's':
+                    down();
+                    console.log('s');
+                    break;
+            }
+        }
+        window.document.addEventListener("keyup", keyUpEvent);
+        return () => {
+            window.document.removeEventListener("keyup", keyUpEvent);
+        }
 
     });
 
     return (
         <div className={className}>
-            <Item key={1} className={"item"} value={board[0][0]} />
+            {
+                itemList.map((i: number, index: number) => (
+                    <Item key={index} className={"item"} value={i} />
+                ))
+            }
+            {/* <Item key={1} className={"item"} value={board[0][0]} />
             <Item key={2} className={"item"} value={board[0][1]} />
             <Item key={3} className={"item"} value={board[0][2]} />
             <Item key={4} className={"item"} value={board[0][3]} />
@@ -33,7 +64,7 @@ function Game(props: BaseProps) {
             <Item key={13} className={"item"} value={board[3][0]} />
             <Item key={14} className={"item"} value={board[3][1]} />
             <Item key={15} className={"item"} value={board[3][2]} />
-            <Item key={16} className={"item"} value={board[3][3]} />
+            <Item key={16} className={"item"} value={board[3][3]} /> */}
         </div>
     )
 }
