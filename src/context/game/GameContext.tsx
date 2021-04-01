@@ -65,6 +65,7 @@ function GameContext(props: GameContextProps) {
                         if (_board[j][i] === _board[k][i]) {
                             _board[k][i] *= 2;
                             _board[j][i] = 0;
+                            movedFlag = true;
                             break;
                         } else if (_board[k][i] !== 0) {
                             break;
@@ -105,6 +106,7 @@ function GameContext(props: GameContextProps) {
                         if (_board[i][j] === _board[i][k]) {
                             _board[i][k] *= 2;
                             _board[i][j] = 0;
+                            movedFlag = true;
                             break;
                         } else if (_board[i][k] !== 0) {
                             break;
@@ -146,6 +148,7 @@ function GameContext(props: GameContextProps) {
                             console.log(_board[i][j], _board[i][k]);
                             _board[i][k] *= 2;
                             _board[i][j] = 0;
+                            movedFlag = true;
                             break;
                         } else if (_board[i][k] !== 0) {
                             break;
@@ -185,6 +188,7 @@ function GameContext(props: GameContextProps) {
                         if (_board[j][i] === _board[k][i]) {
                             _board[k][i] *= 2;
                             _board[j][i] = 0;
+                            movedFlag = true;
                             break;
                         } else if (_board[k][i] !== 0) {
                             break;
