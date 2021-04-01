@@ -43,8 +43,22 @@ function GameContext(props: GameContextProps) {
     }, []);
     const handleUp = useCallback(() => {
         const _board = [...board];
+        for (let i = 0; i < SIZE; i++) { // add same block 
+            for (let j = SIZE - 1; j >= 1; j--) {
+                if (_board[j][i] !== 0) {
+                    for (let k = j - 1; k >= 0; k--) {
+                        if (_board[j][i] === _board[k][i]) {
+                            _board[k][i] *= 2;
+                            _board[j][i] = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
-        for (let i = 0; i < SIZE; i++) {
+
+        for (let i = 0; i < SIZE; i++) { // move block
             for (let j = 1; j < SIZE; j++) {
                 if (_board[j][i] !== 0) {
                     for (let k = 0; k < j; k++) {
@@ -64,7 +78,21 @@ function GameContext(props: GameContextProps) {
 
     const handleLeft = useCallback(() => {
         const _board = [...board];
-        for (let i = 0; i < SIZE; i++) {
+        for (let i = 0; i < SIZE; i++) { // add same block 
+            for (let j = SIZE - 1; j >= 1; j--) {
+                if (_board[i][j] !== 0) {
+                    for (let k = j - 1; k >= 0; k--) {
+                        if (_board[i][j] === _board[i][k]) {
+                            _board[i][k] *= 2;
+                            _board[i][j] = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < SIZE; i++) { // move block
             for (let j = 1; j < SIZE; j++) {
                 if (_board[i][j] !== 0) {
                     for (let k = 0; k < j; k++) {
@@ -84,7 +112,22 @@ function GameContext(props: GameContextProps) {
 
     const handleRight = useCallback(() => {
         const _board = [...board];
-        for (let i = 0; i < SIZE; i++) {
+        for (let i = 0; i < SIZE; i++) { // add same block 
+            for (let j = 0; j < SIZE - 1; j++) {
+                if (_board[i][j] !== 0) {
+                    for (let k = j + 1; k < SIZE; k++) {
+                        if (_board[i][j] === _board[i][k]) {
+                            console.log(_board[i][j], _board[i][k]);
+                            _board[i][k] *= 2;
+                            _board[i][j] = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < SIZE; i++) { // move block
             for (let j = (SIZE - 1) - 1; j >= 0; j--) {
                 if (_board[i][j] !== 0) {
                     for (let k = (SIZE - 1); k > 0; k--) {
@@ -103,7 +146,21 @@ function GameContext(props: GameContextProps) {
 
     const handleDown = useCallback(() => {
         const _board = [...board];
-        for (let i = 0; i < SIZE; i++) {
+        for (let i = 0; i < SIZE; i++) { // add same block
+            for (let j = 0; j < SIZE; j++) {
+                if (_board[j][i] !== 0) {
+                    for (let k = j + 1; k < SIZE - 1; k++) {
+                        if (_board[j][i] === _board[k][i]) {
+                            _board[k][i] *= 2;
+                            _board[j][i] = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < SIZE; i++) { // move block
             for (let j = (SIZE - 1) - 1; j >= 0; j--) {
                 if (_board[j][i] !== 0) {
                     for (let k = SIZE - 1; k >= j; k--) {
