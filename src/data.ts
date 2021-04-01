@@ -14,6 +14,6 @@ export  const data: Data = {
     headText: "Make 2048!",
     GameOver: {
         ment: "Game Over!",
-        button: "Try agin"
+        button: "Try again"
     }
 };
