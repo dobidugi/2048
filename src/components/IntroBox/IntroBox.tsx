@@ -9,7 +9,7 @@ function IntroBox(props: BaseProps) {
     return (
         <div className={className}>
             <b className="intro_text">{data.headText}</b>
-            <Button />
+            <Button text={String(data.button)} />
         </div>
     )
 }

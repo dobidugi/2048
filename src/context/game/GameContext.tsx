@@ -17,10 +17,21 @@ function GameContext(props: GameContextProps) {
     const SIZE = 4;
 
     const [board, setBoard] = useState(initBoard);
-
+    const [flags, setFlags] = useState<Boolean[]>([false, false, false, false]);
     const getRandom = () => {
         return Math.floor(Math.random() * (4 - 0) + 0);
     }
+
+    const checkGameOverFlags = useCallback((num: number) => {
+        const _flags: Boolean[] = [...flags];
+        _flags[num] = true;
+        const res = _flags.filter(flag => flag === true)
+        if (res.length === 4) {
+            alert("gameOver");
+        }
+        setFlags(_flags);
+    }, [flags]);
+
     const handleReset = useCallback(() => {
         const _board = [
             [0, 0, 0, 0],
@@ -42,6 +53,7 @@ function GameContext(props: GameContextProps) {
         setBoard(_board);
     }, []);
 
+
     const newBlock = useCallback(() => {
         const _board = [...board];
         while (true) {
@@ -53,6 +65,7 @@ function GameContext(props: GameContextProps) {
             }
         };
         setBoard(_board);
+        setFlags([false, false, false, false]); // reset flags
     }, [board]);
 
     const handleUp = useCallback(() => {
@@ -92,9 +105,9 @@ function GameContext(props: GameContextProps) {
         }
 
         setBoard(_board);
-        movedFlag === true ? newBlock() : console.log('notmove');
+        movedFlag === true ? newBlock() : checkGameOverFlags(0);
 
-    }, [board, newBlock]);
+    }, [board, checkGameOverFlags, newBlock]);
 
     const handleLeft = useCallback(() => {
         const _board = [...board];
@@ -132,10 +145,10 @@ function GameContext(props: GameContextProps) {
         }
 
         setBoard(_board);
-        movedFlag === true ? newBlock() : console.log('notmove');
+        movedFlag === true ? newBlock() : checkGameOverFlags(1);
 
 
-    }, [board, newBlock]);
+    }, [board, checkGameOverFlags, newBlock]);
 
     const handleRight = useCallback(() => {
         const _board = [...board];
@@ -174,9 +187,9 @@ function GameContext(props: GameContextProps) {
         }
 
         setBoard(_board);
-        movedFlag === true ? newBlock() : console.log('notmove');
+        movedFlag === true ? newBlock() : checkGameOverFlags(2);
 
-    }, [board, newBlock]);
+    }, [board, checkGameOverFlags, newBlock]);
 
     const handleDown = useCallback(() => {
         const _board = [...board];
@@ -214,9 +227,9 @@ function GameContext(props: GameContextProps) {
         }
 
         setBoard(_board);
-        movedFlag === true ? newBlock() : console.log('notmove');
+        movedFlag === true ? newBlock() : checkGameOverFlags(3);
 
-    }, [board, newBlock]);
+    }, [board, checkGameOverFlags, newBlock]);
 
 
 

@@ -4,8 +4,12 @@ import { HandleContext } from '../context/game/GameContext';
 import { data } from '../data';
 import BaseProps from '../interface/BaseProps'
 
-function Button(props: BaseProps) {
-    const { className } = props;
+interface ButtonProps extends BaseProps {
+    text: string;
+}
+
+function Button(props: ButtonProps) {
+    const { className, text } = props;
     const { reset } = useContext(HandleContext);
     const handleClick = useCallback(() => {
 
@@ -13,7 +17,7 @@ function Button(props: BaseProps) {
     }, [reset]);
     return (
         <button className={className} onClick={handleClick} >
-            <b>{data.button}</b>
+            <b>{text}</b>
         </button>
     )
 }
