@@ -27,7 +27,7 @@ function GameOver(props: BaseProps) {
     )
 }
 
-export default styled(GameOver)` 
+export default styled(React.memo(GameOver))` 
     position: absolute;
     width: 100%;
     height: 100%;

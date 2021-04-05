@@ -22,7 +22,7 @@ function Button(props: ButtonProps) {
     )
 }
 
-export default styled(Button)` 
+export default styled(React.memo(Button))` 
     width: 8em;
     height: 2.5em;
     margin: 0;

@@ -38,6 +38,7 @@ function GameContext(props: GameContextProps) {
         if (score > bestScore) {
             window.localStorage.setItem("bestScore", String(score));
             setBestScore(bestScore);
+            alert("최고점수저장");
         }
     }, [bestScore, score]);
 
@@ -77,8 +78,8 @@ function GameContext(props: GameContextProps) {
         setBoard(_board);
         setGameState(true);
         setScore(0);
-        setBestScore(bestScore);
-    }, [bestScore]);
+        setBestScore(Number(window.localStorage.getItem("bestScore")));
+    }, []);
 
 
     const newBlock = useCallback(() => {
