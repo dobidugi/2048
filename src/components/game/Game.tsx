@@ -7,7 +7,7 @@ import Item from './Item';
 
 function Game(props: BaseProps) {
     const { className } = props;
-    const { board } = useContext(StateContext);
+    const { board, gameState } = useContext(StateContext);
     const { up, left, right, down } = useContext(HandleContext);
     const itemList = [];
     for (let i = 0; i < 4; i++) {
@@ -45,7 +45,9 @@ function Game(props: BaseProps) {
 
     return (
         <div className={className}>
-            <GameOver />
+            {!gameState &&
+                <GameOver />
+            }
             {
                 itemList.map((i: number, index: number) => (
                     <Item key={index} className={"item"} value={i} />

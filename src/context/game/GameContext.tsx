@@ -18,6 +18,7 @@ function GameContext(props: GameContextProps) {
 
     const [board, setBoard] = useState(initBoard);
     const [flags, setFlags] = useState<Boolean[]>([false, false, false, false]);
+    const [gameState, setGameState] = useState<Boolean>(true);
     const getRandom = () => {
         return Math.floor(Math.random() * (4 - 0) + 0);
     }
@@ -27,7 +28,7 @@ function GameContext(props: GameContextProps) {
         _flags[num] = true;
         const res = _flags.filter(flag => flag === true)
         if (res.length === 4) {
-            alert("gameOver");
+            setGameState(false);
         }
         setFlags(_flags);
     }, [flags]);
@@ -51,6 +52,7 @@ function GameContext(props: GameContextProps) {
             }
         };
         setBoard(_board);
+        setGameState(true);
     }, []);
 
 
@@ -237,7 +239,8 @@ function GameContext(props: GameContextProps) {
     return (
         <StateContext.Provider
             value={{
-                board: board
+                board: board,
+                gameState: gameState
             }}
         >
             <HandleContext.Provider

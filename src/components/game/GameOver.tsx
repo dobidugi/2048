@@ -36,9 +36,15 @@ export default styled(GameOver)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    animation: fadein 3s;
     .overlay_txt {
         z-index: 2;
+    }
+
+    
+    @keyframes fadein {
+        0% { opacity : 0;}
+        100% { opacity: 100;}
     }
     
 `
