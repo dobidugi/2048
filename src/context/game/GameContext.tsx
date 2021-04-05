@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 interface GameContextProps {
     children: React.ReactNode;
@@ -19,19 +19,42 @@ function GameContext(props: GameContextProps) {
     const [board, setBoard] = useState(initBoard);
     const [flags, setFlags] = useState<Boolean[]>([false, false, false, false]);
     const [gameState, setGameState] = useState<Boolean>(true);
+    const [score, setScore] = useState<number>(0);
+    const [bestScore, setBestScore] = useState<number>(0);
+
+    useEffect(() => {
+        const _bestScore =
+            window.localStorage.hasOwnProperty("bestScore") ?
+                Number(window.localStorage.getItem("bestScore")) :
+                0
+        setBestScore(_bestScore);
+    }, [])
+
     const getRandom = () => {
         return Math.floor(Math.random() * (4 - 0) + 0);
     }
+
+    const saveBestScore = useCallback(() => {
+        if (score > bestScore) {
+            window.localStorage.setItem("bestScore", String(score));
+            setBestScore(bestScore);
+        }
+    }, [bestScore, score]);
 
     const checkGameOverFlags = useCallback((num: number) => {
         const _flags: Boolean[] = [...flags];
         _flags[num] = true;
         const res = _flags.filter(flag => flag === true)
-        if (res.length === 4) {
+        if (res.length === 4) { // game over
             setGameState(false);
+            saveBestScore();
         }
         setFlags(_flags);
-    }, [flags]);
+    }, [flags, saveBestScore]);
+
+    const addScore = useCallback((getScore: number) => {
+        setScore(getScore + score);
+    }, [score]);
 
     const handleReset = useCallback(() => {
         const _board = [
@@ -53,7 +76,9 @@ function GameContext(props: GameContextProps) {
         };
         setBoard(_board);
         setGameState(true);
-    }, []);
+        setScore(0);
+        setBestScore(bestScore);
+    }, [bestScore]);
 
 
     const newBlock = useCallback(() => {
@@ -73,12 +98,14 @@ function GameContext(props: GameContextProps) {
     const handleUp = useCallback(() => {
         const _board = [...board];
         let movedFlag: boolean = false;
+        let getScore = 0;
         for (let i = 0; i < SIZE; i++) { // add same block 
             for (let j = SIZE - 1; j >= 1; j--) {
                 if (_board[j][i] !== 0) {
                     for (let k = j - 1; k >= 0; k--) {
                         if (_board[j][i] === _board[k][i]) {
                             _board[k][i] *= 2;
+                            getScore += _board[k][i];
                             _board[j][i] = 0;
                             movedFlag = true;
                             break;
@@ -108,11 +135,13 @@ function GameContext(props: GameContextProps) {
 
         setBoard(_board);
         movedFlag === true ? newBlock() : checkGameOverFlags(0);
+        addScore(getScore);
 
-    }, [board, checkGameOverFlags, newBlock]);
+    }, [addScore, board, checkGameOverFlags, newBlock]);
 
     const handleLeft = useCallback(() => {
         const _board = [...board];
+        let getScore = 0;
         let movedFlag: boolean = false;
         for (let i = 0; i < SIZE; i++) { // add same block 
             for (let j = SIZE - 1; j >= 1; j--) {
@@ -120,6 +149,7 @@ function GameContext(props: GameContextProps) {
                     for (let k = j - 1; k >= 0; k--) {
                         if (_board[i][j] === _board[i][k]) {
                             _board[i][k] *= 2;
+                            getScore += _board[i][k];
                             _board[i][j] = 0;
                             movedFlag = true;
                             break;
@@ -148,12 +178,13 @@ function GameContext(props: GameContextProps) {
 
         setBoard(_board);
         movedFlag === true ? newBlock() : checkGameOverFlags(1);
+        addScore(getScore);
 
-
-    }, [board, checkGameOverFlags, newBlock]);
+    }, [addScore, board, checkGameOverFlags, newBlock]);
 
     const handleRight = useCallback(() => {
         const _board = [...board];
+        let getScore = 0;
         let movedFlag: boolean = false;
         for (let i = 0; i < SIZE; i++) { // add same block 
             for (let j = 0; j < SIZE - 1; j++) {
@@ -162,6 +193,7 @@ function GameContext(props: GameContextProps) {
                         if (_board[i][j] === _board[i][k]) {
                             console.log(_board[i][j], _board[i][k]);
                             _board[i][k] *= 2;
+                            getScore += _board[i][k];
                             _board[i][j] = 0;
                             movedFlag = true;
                             break;
@@ -190,11 +222,12 @@ function GameContext(props: GameContextProps) {
 
         setBoard(_board);
         movedFlag === true ? newBlock() : checkGameOverFlags(2);
-
-    }, [board, checkGameOverFlags, newBlock]);
+        addScore(getScore);
+    }, [addScore, board, checkGameOverFlags, newBlock]);
 
     const handleDown = useCallback(() => {
         const _board = [...board];
+        let getScore = 0;
         let movedFlag: boolean = false;
         for (let i = 0; i < SIZE; i++) { // add same block
             for (let j = 0; j < SIZE - 1; j++) {
@@ -202,6 +235,7 @@ function GameContext(props: GameContextProps) {
                     for (let k = j + 1; k < SIZE; k++) {
                         if (_board[j][i] === _board[k][i]) {
                             _board[k][i] *= 2;
+                            getScore += _board[k][i];
                             _board[j][i] = 0;
                             movedFlag = true;
                             break;
@@ -230,8 +264,9 @@ function GameContext(props: GameContextProps) {
 
         setBoard(_board);
         movedFlag === true ? newBlock() : checkGameOverFlags(3);
+        addScore(getScore);
 
-    }, [board, checkGameOverFlags, newBlock]);
+    }, [addScore, board, checkGameOverFlags, newBlock]);
 
 
 
@@ -240,7 +275,9 @@ function GameContext(props: GameContextProps) {
         <StateContext.Provider
             value={{
                 board: board,
-                gameState: gameState
+                gameState: gameState,
+                score: score,
+                bestScore: bestScore
             }}
         >
             <HandleContext.Provider

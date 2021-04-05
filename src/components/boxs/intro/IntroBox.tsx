@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
-import { data } from '../../data';
-import BaseProps from '../../interface/BaseProps'
-import Button from '../Button';
+import { data } from '../../../data';
+import BaseProps from '../../../interface/BaseProps'
+import Button from '../../Button';
 
 function IntroBox(props: BaseProps) {
     const { className } = props;
@@ -14,7 +14,7 @@ function IntroBox(props: BaseProps) {
     )
 }
 
-export default styled(IntroBox)` 
+export default styled(React.memo(IntroBox))` 
     display: flex;
     width: 100%;
     justify-content: space-between;

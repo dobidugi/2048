@@ -6,6 +6,11 @@ interface Data {
         ment: String;
         button: String;
     }
+
+    Score: {
+        scoreText: string,
+        bestText: string,
+    }
 }
 
 export  const data: Data = {
@@ -15,5 +20,10 @@ export  const data: Data = {
     GameOver: {
         ment: "Game Over!",
         button: "Try again"
+    },
+    Score: {
+        scoreText: "SCORE",
+        bestText: "BEST",
     }
+    
 };

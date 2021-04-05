@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
-import { data } from '../../data';
-import BaseProps from '../../interface/BaseProps'
+import { data } from '../../../data';
+import BaseProps from '../../../interface/BaseProps'
 
 function TitleBox(props: BaseProps) {
     const { className } = props;
