@@ -1,10 +1,14 @@
 import React from 'react';
 import './App.css';
-
+// import DataString from './components/DataString';
+import Render from './components/Render';
+import GameContext from './context/game/GameContext';
 function App() {
   return (
-    <div className="App">
-      <h1>Test</h1>
+    <div className={`App`}>
+      <GameContext>
+        <Render />
+      </GameContext>
     </div>
   );
 }
