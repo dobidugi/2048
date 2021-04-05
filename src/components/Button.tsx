@@ -1,7 +1,6 @@
 import React, { useCallback, useContext } from 'react'
 import styled from 'styled-components';
 import { HandleContext } from '../context/game/GameContext';
-import { data } from '../data';
 import BaseProps from '../interface/BaseProps'
 
 interface ButtonProps extends BaseProps {
