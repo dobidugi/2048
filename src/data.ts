@@ -3,8 +3,11 @@ interface Data {
     button: string,
     headText: string,
     GameOver: {
-        ment: String;
-        button: String;
+        ment: string;
+        button: string;
+    }
+    GameWin: {
+        ment: string;
     }
 
     Score: {
@@ -20,6 +23,9 @@ export  const data: Data = {
     GameOver: {
         ment: "Game Over!",
         button: "Try again"
+    },
+    GameWin: {
+        ment: "You Win!"
     },
     Score: {
         scoreText: "SCORE",

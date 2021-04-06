@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components';
 import { HandleContext, StateContext } from '../../context/game/GameContext';
 import BaseProps from '../../interface/BaseProps'
-import GameOver from './GameOver';
+import GameOverlay from './GameOverlay';
 import Item from './Item';
 
 function Game(props: BaseProps) {
@@ -18,21 +18,25 @@ function Game(props: BaseProps) {
     useEffect(() => {
         function keyUpEvent(e: KeyboardEvent) {
             switch (e.key) {
+                case 'Up': // ie / edge 
+                case 'ArrowUp':
                 case 'w':
                     up();
-                    console.log('w')
                     break;
+                case 'Left': // ie / edge 
+                case 'ArrowLeft':
                 case 'a':
                     left();
-                    console.log('a');
                     break;
+                case 'Right': // ie / edge 
+                case 'ArrowRight':
                 case 'd':
                     right();
-                    console.log('d');
                     break;
+                case 'Down': // ie / edge 
+                case 'ArrowDown':
                 case 's':
                     down();
-                    console.log('s');
                     break;
             }
         }
@@ -45,8 +49,11 @@ function Game(props: BaseProps) {
 
     return (
         <div className={className}>
-            {!gameState &&
-                <GameOver />
+            {gameState === 1 &&
+                <GameOverlay flag={false} />
+            }
+            {gameState === 2 &&
+                <GameOverlay flag={true} />
             }
             {
                 itemList.map((i: number, index: number) => (

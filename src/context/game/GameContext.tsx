@@ -18,7 +18,13 @@ function GameContext(props: GameContextProps) {
 
     const [board, setBoard] = useState(initBoard);
     const [flags, setFlags] = useState<Boolean[]>([false, false, false, false]);
-    const [gameState, setGameState] = useState<Boolean>(true);
+    const [gameState, setGameState] = useState<number>(0);
+    /*
+    gameState
+    0 -> nothing
+    1 -> lose
+    2 -> win
+    */
     const [score, setScore] = useState<number>(0);
     const [bestScore, setBestScore] = useState<number>(0);
 
@@ -34,28 +40,23 @@ function GameContext(props: GameContextProps) {
         return Math.floor(Math.random() * (4 - 0) + 0);
     }
 
-    const saveBestScore = useCallback(() => {
-        if (score > bestScore) {
-            window.localStorage.setItem("bestScore", String(score));
-            setBestScore(bestScore);
-            alert("최고점수저장");
-        }
-    }, [bestScore, score]);
-
     const checkGameOverFlags = useCallback((num: number) => {
         const _flags: Boolean[] = [...flags];
         _flags[num] = true;
         const res = _flags.filter(flag => flag === true)
         if (res.length === 4) { // game over
-            setGameState(false);
-            saveBestScore();
+            setGameState(1);
         }
         setFlags(_flags);
-    }, [flags, saveBestScore]);
+    }, [flags]);
 
     const addScore = useCallback((getScore: number) => {
+        if (getScore + score > bestScore) {
+            window.localStorage.setItem("bestScore", String(getScore + score));
+            setBestScore(getScore + score);
+        }
         setScore(getScore + score);
-    }, [score]);
+    }, [bestScore, score]);
 
     const handleReset = useCallback(() => {
         const _board = [
@@ -76,7 +77,7 @@ function GameContext(props: GameContextProps) {
             }
         };
         setBoard(_board);
-        setGameState(true);
+        setGameState(0);
         setScore(0);
         setBestScore(Number(window.localStorage.getItem("bestScore")));
     }, []);
@@ -109,6 +110,9 @@ function GameContext(props: GameContextProps) {
                             getScore += _board[k][i];
                             _board[j][i] = 0;
                             movedFlag = true;
+                            if (getScore === 2048) {
+                                setGameState(2);
+                            }
                             break;
                         } else if (_board[k][i] !== 0) {
                             break;
@@ -153,6 +157,9 @@ function GameContext(props: GameContextProps) {
                             getScore += _board[i][k];
                             _board[i][j] = 0;
                             movedFlag = true;
+                            if (getScore === 2048) {
+                                setGameState(2);
+                            }
                             break;
                         } else if (_board[i][k] !== 0) {
                             break;
@@ -170,6 +177,9 @@ function GameContext(props: GameContextProps) {
                             _board[i][k] = _board[i][j];
                             _board[i][j] = 0;
                             movedFlag = true;
+                            if (getScore === 2048) {
+                                setGameState(2);
+                            }
                             break;
                         }
                     }
@@ -197,6 +207,9 @@ function GameContext(props: GameContextProps) {
                             getScore += _board[i][k];
                             _board[i][j] = 0;
                             movedFlag = true;
+                            if (getScore === 2048) {
+                                setGameState(2);
+                            }
                             break;
                         } else if (_board[i][k] !== 0) {
                             break;
@@ -239,6 +252,9 @@ function GameContext(props: GameContextProps) {
                             getScore += _board[k][i];
                             _board[j][i] = 0;
                             movedFlag = true;
+                            if (getScore === 2048) {
+                                setGameState(2);
+                            }
                             break;
                         } else if (_board[k][i] !== 0) {
                             break;
