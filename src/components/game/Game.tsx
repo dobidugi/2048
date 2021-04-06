@@ -18,21 +18,21 @@ function Game(props: BaseProps) {
     useEffect(() => {
         function keyUpEvent(e: KeyboardEvent) {
             switch (e.key) {
+                case 'ArrowUp':
                 case 'w':
                     up();
-                    console.log('w')
                     break;
+                case 'ArrowLeft':
                 case 'a':
                     left();
-                    console.log('a');
                     break;
+                case 'ArrowRight':
                 case 'd':
                     right();
-                    console.log('d');
                     break;
+                case 'ArrowDown':
                 case 's':
                     down();
-                    console.log('s');
                     break;
             }
         }
