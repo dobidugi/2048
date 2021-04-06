@@ -6,6 +6,7 @@ import Game from './game/Game';
 import IntroBox from './boxs/intro/IntroBox';
 import TitleBox from './boxs/title/TitleBox';
 import ScoreBox from './boxs/score/ScoreBox';
+import Footer from './footer/Footer';
 
 function Render(props: BaseProps) {
     const { className } = props;
@@ -17,6 +18,7 @@ function Render(props: BaseProps) {
             </div>
             <IntroBox />
             <Game />
+            <Footer />
         </div>
     )
 }

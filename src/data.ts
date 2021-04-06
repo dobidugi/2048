@@ -14,6 +14,11 @@ interface Data {
         scoreText: string,
         bestText: string,
     }
+
+    Footer: {
+        text: string,
+        link: string,
+    }
 }
 
 export  const data: Data = {
@@ -30,6 +35,11 @@ export  const data: Data = {
     Score: {
         scoreText: "SCORE",
         bestText: "BEST",
+    },
+
+    Footer: {
+        text: "view code",
+        link: "https://github.com/dobidugi/2048"
     }
     
 };
