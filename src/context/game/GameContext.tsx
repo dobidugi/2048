@@ -101,10 +101,10 @@ function GameContext(props: GameContextProps) {
         const _board = [...board];
         let movedFlag: boolean = false;
         let getScore = 0;
-        for (let i = 0; i < SIZE; i++) { // add same block 
-            for (let j = SIZE - 1; j >= 1; j--) {
+        for (let i = 0; i < SIZE; i++) { // add same block
+            for (let j = 0; j < SIZE - 1; j++) {
                 if (_board[j][i] !== 0) {
-                    for (let k = j - 1; k >= 0; k--) {
+                    for (let k = j + 1; k < SIZE; k++) {
                         if (_board[j][i] === _board[k][i]) {
                             _board[k][i] *= 2;
                             getScore += _board[k][i];
@@ -149,10 +149,11 @@ function GameContext(props: GameContextProps) {
         let getScore = 0;
         let movedFlag: boolean = false;
         for (let i = 0; i < SIZE; i++) { // add same block 
-            for (let j = SIZE - 1; j >= 1; j--) {
+            for (let j = 0; j < SIZE - 1; j++) {
                 if (_board[i][j] !== 0) {
-                    for (let k = j - 1; k >= 0; k--) {
+                    for (let k = j + 1; k < SIZE; k++) {
                         if (_board[i][j] === _board[i][k]) {
+                            console.log(_board[i][j], _board[i][k]);
                             _board[i][k] *= 2;
                             getScore += _board[i][k];
                             _board[i][j] = 0;
@@ -198,11 +199,10 @@ function GameContext(props: GameContextProps) {
         let getScore = 0;
         let movedFlag: boolean = false;
         for (let i = 0; i < SIZE; i++) { // add same block 
-            for (let j = 0; j < SIZE - 1; j++) {
+            for (let j = SIZE - 1; j >= 1; j--) {
                 if (_board[i][j] !== 0) {
-                    for (let k = j + 1; k < SIZE; k++) {
+                    for (let k = j - 1; k >= 0; k--) {
                         if (_board[i][j] === _board[i][k]) {
-                            console.log(_board[i][j], _board[i][k]);
                             _board[i][k] *= 2;
                             getScore += _board[i][k];
                             _board[i][j] = 0;
@@ -243,10 +243,10 @@ function GameContext(props: GameContextProps) {
         const _board = [...board];
         let getScore = 0;
         let movedFlag: boolean = false;
-        for (let i = 0; i < SIZE; i++) { // add same block
-            for (let j = 0; j < SIZE - 1; j++) {
+        for (let i = 0; i < SIZE; i++) { // add same block 
+            for (let j = SIZE - 1; j >= 1; j--) {
                 if (_board[j][i] !== 0) {
-                    for (let k = j + 1; k < SIZE; k++) {
+                    for (let k = j - 1; k >= 0; k--) {
                         if (_board[j][i] === _board[k][i]) {
                             _board[k][i] *= 2;
                             getScore += _board[k][i];
