@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components';
 import { HandleContext, StateContext } from '../../context/game/GameContext';
 import BaseProps from '../../interface/BaseProps'
-import GameOver from './GameOver';
+import GameOverlay from './GameOverlay';
 import Item from './Item';
 
 function Game(props: BaseProps) {
@@ -45,8 +45,11 @@ function Game(props: BaseProps) {
 
     return (
         <div className={className}>
-            {!gameState &&
-                <GameOver />
+            {gameState === 1 &&
+                <GameOverlay flag={false} />
+            }
+            {gameState === 2 &&
+                <GameOverlay flag={true} />
             }
             {
                 itemList.map((i: number, index: number) => (
